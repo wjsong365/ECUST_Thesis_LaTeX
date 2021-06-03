@@ -1,0 +1,175 @@
+%!TEX program = xelatex
+
+
+% 打印选项： 双面打印 twoside；单面打印 oneside
+% 模板选项： 硕士论文 master； 博士论文 doctor
+% openright, openany 指定新的一章 \chapter 是在奇数页（右侧）开始，还是直接紧跟着上一页开始。report 默认为 openany，book 默认为 openright。对 article 无效。
+\documentclass[twoside, doctor, openany]{ecust_thesis}
+\usepackage{amssymb,amsfonts,amsmath,mathrsfs}
+\allowdisplaybreaks[4] % 长公式换页
+\usepackage{bm} % 加粗数学公式
+
+\AtBeginDocument{% 修改公式上下间距 https://tex.stackexchange.com/questions/69662/how-to-globally-change-the-spacing-around-equations
+ \abovedisplayskip=5pt plus 4pt minus 2pt
+ \abovedisplayshortskip=5pt plus 4pt minus 4pt
+ \belowdisplayskip=5pt plus 4pt minus 2pt
+ \belowdisplayshortskip=5pt plus 4pt minus 4pt
+}
+
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{algpseudocode} % 算法包
+\usepackage{algorithmicx} % 算法包
+\usepackage[chapter]{algorithm} % 算法按章编号
+% \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+%\usepackage{arydshln} % 在引用longtable包的情况下，arydshln包会和booktab包冲突
+\usepackage[list=off]{bicaption}% ccaption -- bicaption
+\usepackage{longtable}
+\setlength{\LTpre}{0pt} % 设置longtable的前后间距 https://tex.stackexchange.com/questions/5683/how-to-remove-top-and-bottom-whitespace-of-longtable
+\setlength{\LTpost}{0pt}
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\makeatletter
+\newcommand{\multiline}[1]{% 表格中的多行
+  \begin{tabularx}{\dimexpr\linewidth-\ALG@thistlm}[t]{@{}X@{}}
+    #1
+  \end{tabularx}
+}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\makeatother
+\usepackage[figuresright]{rotating} % 用于旋转表：
+\usepackage{float} % 设置表格位置 \begin{table}[H] % 用H表示必须放在这里
+% \restylefloat{table} % https://stackoverflow.com/questions/1673942/latex-table-positioning
+\usepackage{balance}
+\usepackage{autobreak}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage[normalem]{ulem} % underline
+\usepackage{CJKulem} % 使用Ctex，ulem宏包中下划线命令\uline如果对中文处理，则中文换行失效，需要换成一下Ctex专用宏包。
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp}
+
+\usepackage{pdfpages} % 用于合并pdf
+
+% \usepackage[bookmarksopen=true]{hyperref}
+\usepackage{bookmark} % 把不编号章节仅加入PDF书签，不放入目录
+
+\usepackage{paralist}
+\let\itemize\compactitem
+\let\enditemize\endcompactitem
+\let\enumerate\compactenum
+\let\endenumerate\endcompactenum
+\let\description\compactdesc
+\let\enddescription\endcompactdesc
+\setdefaultleftmargin{2em}{2em}{1em}{1em}{1em}{1em} % 调整itemize对齐
+
+\usepackage{titlesec} % 设置垂直对齐方式，\flushbottom垂直两端对齐（标题不会出现在页尾），\raggedbottom顶部对齐
+\raggedbottom
+
+% \renewcommand{\thefootnote}{\fnsymbol{footnote}} % footnote格式https://www.overleaf.com/learn/latex/Footnotes
+
+%% 定义常用的符号
+\newcommand{\ssd}{{$^\circ$C}} %℃
+\newcommand{\hsd}{{$^\circ$F}} %℉
+\newcommand{\blh}{\textasciitilde} % 波浪号~
+
+% \theoremstyle{plain} % 默认，这几个命令改变remark中的字体样式
+% \theoremstyle{remark}
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{remark}{注}[chapter]
+
+%\allowdisplaybreaks % 使大公式跨页显示，以补充前一页底部的空白。
+\interdisplaylinepenalty=2500
+\hyphenpenalty=5000 % 通过调整单词断开位置调整段落右边对齐效果
+\tolerance=1200
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%\renewcommand{\algorithmicfor}{\textbf{对}}
+%\renewcommand{\algorithmicif}{\textbf{如果}}
+%\renewcommand{\algorithmicdo}{\textbf{执行}}
+%\renewcommand{\algorithmicelse}{\textbf{否则}}
+%\renewcommand{\algorithmicthen}{\textbf{则}}
+%\renewcommand{\algorithmicend}{\textbf{结束}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 封面
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{华东理工大学博士论文LaTeX模板}
+\englishtitle{
+  \begin{tabular}{c}
+    两行英文标题 \\ 换行方式
+  \end{tabular}}
+\englishauthor{}
+
+% \includepdf[pages=-]{chapters/硕、博士封面.pdf}
+% \includepdf[pages=-]{chapters/空白页.pdf}
+% \includepdf[pages=-]{chapters/学位论文扉页.pdf}
+% \includepdf[pages=-]{chapters/学位论文授权声明.pdf}
+% \includepdf[pages=-]{chapters/空白页.pdf}
+% \includepdf[pages=-]{chapters/学位论文提交要求.pdf}
+% \includepdf[pages=-]{chapters/空白页.pdf}
+% \includepdf[pages=-]{chapters/作者声明.pdf}
+% \includepdf[pages=-]{chapters/空白页.pdf}
+%% 上面资料下载地址：https://gschool.ecust.edu.cn/12735/list.htm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 前置部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+% 摘要
+\include{chapters/abstract}
+
+% 加入目录
+\tableofcontents
+\cleardoublepage % 保证第一章的位置
+%% 加入表格索引
+%%\listoftables
+% 加入插图索引
+%\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 正主体部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+%% 各章正文内容
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+
+
+%% 参考文献内容（小4号宋体），使用 BibTeX，包含参考文献文件.bib
+%\bibliography{reference/chap1,reference/chap2} %多个章节的参考文献
+\bibliography{reference/references} %
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 后置部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% 附录(章节编号重新计算，使用字母进行编号)
+\appendix
+\renewcommand\theequation{\Alph{chapter}--\arabic{equation}}  % 附录中编号形式是"A-1"的样子
+\renewcommand\thefigure{\Alph{chapter}--\arabic{figure}}
+\renewcommand\thetable{\Alph{chapter}--\arabic{table}}
+% 附录
+%\include{chapters/appendix1}
+
+%(其后部分无编号)
+\backmatter
+% 致谢
+\include{chapters/thanks}
+% 发表文章目录
+\include{chapters/publications}
+
+
+% \includepdf[pages=-]{chapters/卷内备考表.pdf}
+
+\end{document}

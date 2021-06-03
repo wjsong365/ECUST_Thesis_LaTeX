@@ -1,0 +1,331 @@
+
+\chapter{模板说明}\label{c1:intro}
+
+本模板基于\verb|北京理工大学硕士（博士）学位论文LaTeX模板|\upcite{BITthesis}修改。
+修改内容主要包括：
+\begin{enumerate}
+  \item 页眉页脚样式、高度、页边距；
+  \item 左右页边距；
+  \item 行间距；
+  \item 公式、图、表前后间距；
+  \item 各级标题前后间距和样式；
+  \item 列表、枚举的缩进；
+  \item 其他样式等。
+\end{enumerate}
+
+下面给出论文中常用的各类图、表、算法、公式、参考文献等的使用方法。
+
+\begin{remark}
+  本文默认读者已经知道了LaTeX的基本语法，并可以熟练使用LaTeX写期刊论文。
+  下面仅介绍重要的、常用的示例，并不加以详细解释。
+\end{remark}
+
+\section{编译}
+
+编译顺序为：xelatex-->bibtex-->xelatex-->xelatex。
+
+推荐使用VSCode + LaTeX Workshop的组合写论文。
+
+\section{图}\label{c1sec:figure}
+
+图\ref{c1fig_demo1}是一个标准的图。
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=5cm]{figures/chapter1/fig_demo.pdf}
+  \bicaption{示意图}
+  {Demo}
+  \label{c1fig_demo1}
+\end{figure}
+
+图\ref{c1fig_demo2}是一行多列的子图安排方式。
+\begin{figure}[!htb]
+  \centering
+  \subfigure[]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}
+  \subfigure[]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}
+  \bicaption{一行多列的子图安排方式。
+  (a) 子图1，
+  (b) 子图2}
+  {Subfigure. 
+  (a) subfigure 1,
+  (b) subfigure 2} 
+  \label{c1fig_demo2}
+\end{figure}
+
+图\ref{c1fig_demo3}是多行多列的子图安排方式。如果想让这段话出现在图\ref{c1fig_demo2}之后，则可以在图\ref{c1fig_demo2}中使用\verb|\begin{figure}[H]|命令。
+\begin{figure}[H]
+  \centering
+  \subfigure[当然，如果你想，这里也可以写些内容]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}
+  \subfigure[]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}\\
+  \subfigure[]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}
+  \subfigure[]{\includegraphics[width=0.28\textwidth]{figures/chapter1/fig_demo.pdf}}
+  \bicaption{子图示意图。
+  (a) 子图1，
+  (b) 子图2，
+  (c) 子图3，
+  (d) 子图4}
+  {Subfigure. 
+  (a) subfigure 1,
+  (b) subfigure 2,
+  (c) subfigure 3,
+  (d) subfigure 4} 
+  \label{c1fig_demo3}
+\end{figure}
+
+% \newpage
+\section{表格}\label{c1sec:table}
+
+表\ref{c1tab_1}是一个标准的三线表格。
+\begin{table}[H]
+  \zihao{5} 
+  \renewcommand{\arraystretch}{1.3}
+  \renewcommand{\tabcolsep}{5pt}
+  \bicaption{这是一个标准表格}
+  {This is a standard table}
+  \label{c1tab_1}
+  \centering
+  \begin{tabular}{cc}
+  \toprule
+  名称1 & 名称2 \\
+  \midrule
+  A	&	B	\\
+  A	&	B	\\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+表\ref{c1tab_2}是一个带脚注的复杂表格。可以看到这段文字没有出现在上一页的末尾（尽管上一页的末尾还有空间），是因为表\ref{c1tab_1}中使用了\verb|\begin{table}[H]|命令。
+\begin{table}[!htb]
+  \zihao{5} 
+  \renewcommand{\arraystretch}{1.3}
+  \renewcommand{\tabcolsep}{5pt}
+  \bicaption{这是一个带脚注的复杂表格\textsuperscript{a}}
+  {This is a complex table}
+  \label{c1tab_2}
+  \centering
+  \begin{tabular}{ccccccc}
+  \toprule
+  \multirow{3}{*}{AAA}	&	\multicolumn{2}{c}{BBB\textsuperscript{b}}	&	\multicolumn{2}{c}{CCC}	&	\multicolumn{2}{c}{DDD}	\\
+  \cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-7}
+    &	\tabincell{c}{A1\\A2}	&	\tabincell{c}{B1\\B2}	&	\tabincell{c}{C1\\C2}	&	\tabincell{c}{D1\\D2}	&	\tabincell{c}{E1\\E2}	&	\tabincell{c}{F1\\F2}	\\
+  \midrule
+  AAA1	&	20361	&	27.02	&	20901	&	27.72	&	21711	&	28.14	\\
+  AAA2	&	10051	&	13.34	&	10051	&	13.33	&	10311	&	13.36	\\
+  \bottomrule
+  \end{tabular}\\
+  \textsuperscript{a} 脚注1 \\
+  \textsuperscript{b} 脚注2 \\
+\end{table}
+
+表\ref{c1tab_3}是一个较宽的表格，需要缩放到页宽范围，这可以通过命令\\
+\verb|\resizebox{1\textwidth}{!}{}|\\
+实现。
+此表格还采用了\verb|\specialrule{0pt}{3pt}{3pt}|命令来调整倒数第3行-倒数第2行的间距，使表格更美观。
+
+\begin{table}[H]
+  \zihao{5} 
+  \bicaption{这是一个较宽的表格，需要缩放到页宽范围}
+  {This is a complex table}
+  \label{c1tab_3}
+  \centering
+  \resizebox{1\textwidth}{!}{ % 通过缩放，让宽表和正文一样宽
+  \begin{tabular}{ccccccc}
+  \toprule
+  AAA	&	$\delta$	&	$\beta$\textsuperscript{\emph{a}}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	\\
+  \midrule
+  \multirow{4}{*}{AAA}	&	2.549	&	2.549	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	2.718	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	3.094	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	3.200	&	30/30	&	30/30	&	30/30	&	30/30	\\ \specialrule{0pt}{3pt}{3pt}
+  \multirow{2}{*}{BBB}	&	2.128	&	2.128	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	BBB	&	2.500	&	30/30	&	30/30	&	30/30	&	30/30	\\ 
+  \bottomrule
+  \end{tabular}}\\
+  \textsuperscript{\emph{a}} 脚注1
+\end{table}
+
+当然，也可以将表\ref{c1tab_3}缩放到指定宽度，如80\%页面宽度，见表\ref{c1tab_4}。
+
+\begin{table}[H]
+  \zihao{5} 
+  \bicaption{这是一个较宽的表格，需要缩放到80\%页宽范围}
+  {This is a complex table}
+  \label{c1tab_4}
+  \centering
+  \resizebox{0.8\textwidth}{!}{ % 通过缩放，让宽表和正文一样宽
+  \begin{tabular}{ccccccc}
+  \toprule
+  AAA	&	$\delta$	&	$\beta$\textsuperscript{\emph{a}}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	&	\tabincell{c}{XXXXXXXXXXXX\\YYY}	\\
+  \midrule
+  \multirow{4}{*}{AAA}	&	2.549	&	2.549	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	2.718	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	3.094	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	AAA	&	3.200	&	30/30	&	30/30	&	30/30	&	30/30	\\ \specialrule{0pt}{3pt}{3pt}
+  \multirow{2}{*}{BBB}	&	2.128	&	2.128	&	30/30	&	30/30	&	30/30	&	30/30	\\
+    &	BBB	&	2.500	&	30/30	&	30/30	&	30/30	&	30/30	\\ 
+  \bottomrule
+  \end{tabular}}\\
+  \textsuperscript{\emph{a}} 脚注1
+\end{table}
+
+
+如果表格缩放到页面宽度后字体太小看不清，这时你可能需要通过使用\\
+\verb|\begin{sidewaystable}|命令来实现一个横着放置的宽表，如表\ref{c1tab_5}所示。
+
+\begin{sidewaystable}
+  \zihao{5} 
+  \renewcommand{\arraystretch}{1.2}
+  % \renewcommand{\tabcolsep}{3pt}
+  \bicaption{sidewaystable表格}
+  {sidewaystable}
+  \label{c1tab_5}
+  \centering
+  \begin{tabular}{ccc|cc|cc}
+  \toprule
+  Problem	&	AAA1	&	AAA2	&	BBB1	&	BBB2	&	CCC1	&	CCC2	\\
+  \midrule
+  ABC1	&	5.51e-01(8.20e-02)	&	\textbf{8.23e-01(1.75e-02)+ }	&	3.17e-02(3.99e-02)	&	\textbf{8.46e-01(9.72e-03)+ }	&	8.32e-01(9.47e-03)	&	\textbf{8.71e-01(1.51e-04)+ }	\\
+  ABC2	&	2.38e-01(7.85e-02)	&	\textbf{4.81e-01(2.22e-02)+ }	&	0.00e+00(0.00e+00)	&	\textbf{9.77e-02(1.99e-01)+ }	&	4.48e-01(7.58e-02)	&	\textbf{5.38e-01(1.63e-04)+ }	\\
+  ABC3	&	4.83e-01(6.85e-02)	&	\textbf{8.83e-01(9.03e-02)+ }	&	9.19e-02(6.93e-02)	&	\textbf{9.82e-01(3.03e-02)+ }	&	9.71e-01(1.49e-02)	&	\textbf{1.02e+00(3.01e-04)+ }	\\
+  ABC4	&	0.00e+00(0.00e+00)	&	\textbf{5.83e-01(1.33e-01)+ }	&	0.00e+00(0.00e+00)	&	\textbf{9.58e-02(2.51e-01)+ }	&	1.55e-01(1.53e-01)	&	\textbf{6.77e-01(1.16e-01)+ }	\\
+  ABC6	&	3.73e-01(7.27e-02)	&	\textbf{4.10e-01(2.62e-02)= }	&	1.39e-01(1.63e-01)	&	\textbf{1.79e-01(1.76e-01)= }	&	1.20e-01(7.40e-02)	&	\textbf{4.33e-01(1.39e-04)+ }	\\
+  ABD1	&	1.21e+01(1.64e+00)	&	\textbf{4.31e+01(2.54e+00)+ }	&	1.58e+01(8.86e-01)	&	\textbf{4.49e+01(2.04e+00)+ }	&	2.74e+01(2.15e+00)	&	\textbf{3.34e+01(3.46e+00)+ }	\\
+  ABD2	&	\textbf{5.54e+01(7.97e-01)}	&	5.51e+01(1.11e+00)= 	&	5.66e+01(5.68e-01)	&	\textbf{5.87e+01(3.75e-01)+ }	&	5.81e+01(4.11e-01)	&	\textbf{5.86e+01(3.19e-01)+ }	\\
+  ABD4	&	2.86e+01(6.99e-01)	&	\textbf{3.27e+01(3.69e-01)+ }	&	3.06e+01(4.13e-01)	&	\textbf{3.40e+01(2.81e-01)+ }	&	3.38e+01(2.36e-01)	&	\textbf{3.49e+01(1.85e-01)+ }	\\
+  ABD5	&	2.95e+01(3.10e-01)	&	\textbf{2.98e+01(4.45e-01)+ }	&	3.06e+01(2.38e-01)	&	\textbf{3.09e+01(2.48e-01)+ }	&	3.23e+01(2.38e-01)	&	\textbf{3.29e+01(1.74e-01)+ }	\\
+  ABD6	&	2.47e+01(1.83e+00)	&	\textbf{2.83e+01(1.82e+00)+ }	&	2.67e+01(1.28e+00)	&	\textbf{2.98e+01(1.03e+00)+ }	&	3.08e+01(8.79e-01)	&	\textbf{3.12e+01(5.63e-01)= }	\\
+  ABD7	&	2.87e+01(1.44e+00)	&	\textbf{3.25e+01(3.74e-01)+ }	&	3.22e+01(5.55e-01)	&	\textbf{3.41e+01(2.05e-01)+ }	&	3.40e+01(2.16e-01)	&	\textbf{3.44e+01(2.60e-01)+ }	\\
+  ABD8	&	1.93e+01(2.52e+00)	&	\textbf{2.60e+01(8.95e-01)+ }	&	2.50e+01(6.55e-01)	&	\textbf{2.76e+01(2.78e-01)+ }	&	2.82e+01(3.08e-01)	&	\textbf{2.83e+01(3.76e-01)= }	\\
+  ABD9	&	2.85e+01(1.72e+00)	&	\textbf{2.97e+01(1.87e+00)+ }	&	3.07e+01(1.21e+00)	&	\textbf{3.14e+01(1.74e+00)+ }	&	3.19e+01(7.18e-01)	&	\textbf{3.26e+01(3.73e-01)+ }	\\
+  ABE1	&	4.93e-03(1.36e-02)	&	\textbf{1.09e-01(3.94e-02)+ }	&	2.70e-02(4.19e-02)	&	\textbf{1.09e-01(4.31e-02)+ }	&	5.89e-02(5.15e-02)	&	\textbf{8.66e-02(5.55e-02)+ }	\\
+  ABE2	&	6.23e-01(2.53e-02)	&	\textbf{7.06e-01(1.98e-03)+ }	&	7.14e-01(2.33e-03)	&	\textbf{7.21e-01(2.34e-03)+ }	&	7.39e-01(8.54e-04)	&	\textbf{7.42e-01(4.94e-04)+ }	\\
+  ABE3	&	0.00e+00(0.00e+00)	&	0.00e+00(0.00e+00)= 	&	\textbf{1.02e-03(5.60e-03)}	&	0.00e+00(0.00e+00)= 	&	0.00e+00(0.00e+00)	&	\textbf{1.18e-02(6.46e-02)= }	\\
+  ABE4	&	5.26e-01(1.33e-01)	&	\textbf{5.34e-01(1.69e-01)= }	&	\textbf{4.76e-01(1.95e-01)}	&	4.57e-01(2.20e-01)= 	&	6.23e-01(1.66e-01)	&	\textbf{6.34e-01(1.42e-01)= }	\\
+  ABE5	&	1.28e-01(6.25e-04)	&	\textbf{1.30e-01(1.27e-04)+ }	&	\textbf{1.26e-01(7.35e-04)}	&	1.25e-01(1.26e-03)- 	&	\textbf{1.29e-01(6.99e-04)}	&	1.28e-01(1.81e-03)= 	\\
+  ABE6	&	1.09e-01(4.66e-02)	&	\textbf{1.29e-01(1.86e-03)+ }	&	1.17e-01(2.19e-02)	&	\textbf{1.18e-01(1.11e-02)+ }	&	\textbf{1.27e-01(1.04e-03)}	&	1.23e-01(1.14e-03)- 	\\
+  ABE7	&	3.94e-01(2.29e-01)	&	\textbf{1.38e+00(3.38e-02)+ }	&	9.96e-02(1.76e-01)	&	\textbf{1.57e+00(3.60e-02)+ }	&	1.43e+00(5.21e-02)	&	\textbf{1.57e+00(1.15e-02)+ }	\\
+  \midrule
+  +/-/=	&		&	16/0/4	&		&	16/1/3	&		&	14/1/5	\\
+  \bottomrule
+  \end{tabular}
+\end{sidewaystable}
+
+\clearpage
+如果一个表太长，则可能需要跨页表格，如表\ref{c1tab_long}所示。
+\begin{center}
+  \zihao{5} % 图、表、算法
+  %\renewcommand{\arraystretch}{1.3} % longtable中的间距默认和正文一样
+  \begin{longtable}{llrrr}
+  \bicaption{这是一个长表}{This is a very long table}
+  \label{c1tab_long} \\
+  \toprule
+  Name1	&	Name2	&	Name3	&	Name4	&	Name5	\\
+  \midrule
+  \endfirsthead
+  \multicolumn{5}{r}{(接上表)}   \\
+  \toprule
+  Name1	&	Name2	&	Name3	&	Name4	&	Name5	\\
+  \midrule
+  \endhead
+  AAA	&	A1	&	180.0	&	281.0	&	235.3	\\
+      &	A2	&	5.3	&	43.5	&	35.1	\\
+      &	A3	&	680.3	&	1020.0	&	759.3	\\
+      &	A4	&	14.4	&	15.8	&	15.4	\\
+      &	A5 	&	347.7	&	365.0	&	355.9	\\
+      &	A6 	&	363.4	&	384.1	&	372.6	\\
+      &	A7 	&	373.5	&	393.7	&	384.2	\\
+      &	A8 	&	384.9	&	400.0	&	394.4	\\
+      &	A9 	&	379.9	&	400.0	&	390.2	\\
+      &	A10	&	379.5	&	399.7	&	390.2	\\
+      &	A11	&	382.1	&	399.9	&	393.2	\\
+  BBB	&	B1	&	895.8	&	918.8	&	907.2	\\
+      &	B2	&	0.5	&	1.1	&	0.9	\\
+      &	B3	&	715.6	&	2655.0	&	1360.1	\\
+      &	B4	&	318.2	&	424.8	&	378.2	\\
+      &	B5	&	183.0	&	242.0	&	215.0	\\
+      &	B6	&	291.0	&	376.0	&	331.8	\\
+      &	B7	&	373.0	&	452.0	&	429.6	\\
+      &	B8	&	469.0	&	520.0	&	501.1	\\
+      &	B9	&	521.0	&	565.0	&	549.5	\\
+  CCC	&	C1&	912.7	&	947.5	&	929.2	\\
+      &	C2	&	0.2	&	0.8	&	0.3	\\
+      &	C3	&	143.0	&	229.0	&	184.7	\\
+      &	C4	&	202.0	&	263.0	&	221.6	\\
+      &	C5	&	243.0	&	304.0	&	269.9	\\
+      &	C6	&	281.0	&	365.0	&	329.9	\\
+      &	C7	&	293.0	&	379.0	&	342.3	\\
+  DDD	&	D1	&	369.0	&	397.7	&	382.9	\\
+      &	D2	&	384.6	&	406.7	&	394.6	\\
+      &	D3	&	385.1	&	407.8	&	397.6	\\
+      &	D4	&	388.3	&	405.1	&	398.7	\\
+      &	D5	&	385.6	&	407.9	&	397.2	\\
+      &	D6	&	387.4	&	414.5	&	401.6	\\
+      &	D7	&	388.9	&	418.1	&	403.3	\\
+      &	D8 	&	3.6	&	7.2	&	5.3	\\
+      &	D9 	&	2.3	&	5.2	&	3.6	\\
+      &	D10	&	11.8	&	23.9	&	17.6	\\
+      &	D11	&	9.7	&	21.3	&	14.6	\\
+      &	D12	&	34.4	&	42.6	&	39.2	\\
+      &	D13	&	7.8	&	32.5	&	19.6	\\
+  \bottomrule
+  \end{longtable}
+\end{center}%
+
+
+
+\section{算法}\label{c1sec:algorithm}
+
+下面是一个算法示例。
+
+\begin{algorithm*}[!ht]
+  \zihao{5} % 图、表、算法
+\bicaption{算法示例}
+{Algorithm demo}	
+\label{c1alg_demo}
+\begin{algorithmic}[1]
+\Require{
+$p_1$：参数1
+\Statex	$p_1$：参数2
+\Statex	$p_1$：参数3}
+\Ensure{
+$o_1$：输出1
+\Statex	$o_2$：输出2}
+\State    第一条命令   \Comment{第一条命令的注释}        
+\While	{$True$}	
+  \State /***** 下面代码块的注释 *****/
+  \State 相关命令 \Comment{注释}
+  \If  {$a=b$} \Comment{If的注释}
+      \State 执行相关命令 \Comment{注释}
+  \EndIf
+  \If  {$c=d$}  
+      \State 命令   \Comment{注释}
+  \Else	
+      \State  命令   \Comment{注释}
+  \EndIf
+\EndWhile
+\Repeat
+    \State   $j=j+1$ \Comment{注释}
+\Until   {$j >  10$}
+\For    {$i=1$ \textbf{to} $10$}
+      \State $i=i+1$
+\EndFor
+\State \Return $o_1$, $o_2$
+\end{algorithmic}
+\end{algorithm*}
+
+
+\section{公式}\label{c1sec:equation}
+
+略。
+更多公式排版见参考文献\cite{latexlive}。
+
+
+\section{参考文献}\label{c1sec:reference}
+
+参考文献样式分别上标（如参考文献\upcite{BITthesis,latexlive}）和非上标（如参考文献\cite{BITthesis,latexlive}，参考文献\cite{BITthesis}和\cite{latexlive}）等样式。
+
+
+\section{其他}\label{c1sec:other}
+
+更多信息请参考文献\cite{BITthesis}。
+
+关于LaTeX的更多知识参考文献\cite{LaTeX2e介绍}。
